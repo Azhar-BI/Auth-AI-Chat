@@ -1,5 +1,7 @@
 import { SvelteKitAuth } from "@auth/sveltekit";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
+import Google from "@auth/core/providers/google";
+import GitHub from "@auth/core/providers/github";
 import { db } from "$lib/server/db";
 import { users, accounts, sessions, verificationTokens } from "$lib/server/schema";
 import { eq } from "drizzle-orm";
@@ -19,7 +21,18 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
 		maxAge: 30 * 24 * 60 * 60 // 30 days
 	},
 
-	providers: [],
+	providers: [
+		Google({
+			clientId: process.env.AUTH_GOOGLE_ID,
+			clientSecret: process.env.AUTH_GOOGLE_SECRET,
+			allowDangerousEmailAccountLinking: true
+		}),
+		GitHub({
+			clientId: process.env.AUTH_GITHUB_ID,
+			clientSecret: process.env.AUTH_GITHUB_SECRET,
+			allowDangerousEmailAccountLinking: true
+		})
+	],
 
 	pages: {
 		signIn: "/login"
@@ -29,6 +42,7 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
 		createUser: async ({ user }) => {
 			if (user.email) {
 				try {
+					// Reset emailVerified so OAuth users must also verify
 					await db.update(users).set({ emailVerified: null }).where(eq(users.email, user.email));
 
 					const token = crypto.randomUUID();
