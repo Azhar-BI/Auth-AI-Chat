@@ -46,6 +46,12 @@ export const actions: Actions = {
 			});
 		}
 
+		if (user.disabled === "true") {
+			return fail(403, {
+				error: "Your account has been disabled. Please contact an administrator."
+			});
+		}
+
 		// Create database session (Auth.js database strategy)
 		const sessionToken = crypto.randomUUID();
 		const expires = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
