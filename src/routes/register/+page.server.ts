@@ -12,6 +12,9 @@ export const load: PageServerLoad = async ({ locals }) => {
 	if (session?.user && (session.user as any).emailVerified) {
 		throw redirect(303, "/dashboard");
 	}
+	return {
+		hasUnverifiedSession: !!(session?.user && !(session.user as any).emailVerified)
+	};
 };
 
 export const actions: Actions = {
