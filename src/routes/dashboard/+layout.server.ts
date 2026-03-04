@@ -12,6 +12,7 @@ export const load: LayoutServerLoad = async ({ locals }) => {
 	}
 
 	return {
-		user: session.user
+		user: session.user,
+		role: (session.user as any).role ?? "user"
 	};
 };

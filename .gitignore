@@ -32,5 +32,8 @@ Thumbs.db
 
 .assignment.pdf
 
+# Claude Code
+.claude/
+
 # pnpm (exclude npm lock file)
 package-lock.json

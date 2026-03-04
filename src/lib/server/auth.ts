@@ -69,6 +69,10 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
 			if (session.user) {
 				session.user.id = user.id;
 				(session.user as any).emailVerified = user.emailVerified;
+
+				const dbUser = await db.select({ role: users.role, disabled: users.disabled }).from(users).where(eq(users.id, user.id)).then((res) => res[0]);
+				(session.user as any).role = dbUser?.role ?? "user";
+				(session.user as any).disabled = dbUser?.disabled ?? "false";
 			}
 			return session;
 		}
