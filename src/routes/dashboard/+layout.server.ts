@@ -11,8 +11,10 @@ export const load: LayoutServerLoad = async ({ locals }) => {
 		throw redirect(303, '/verify-email-required');
 	}
 
+	const role = (session.user as any).role ?? 'user';
+	console.log('DEBUG: session role =', role, '| user =', session.user.email);
 	return {
 		user: session.user,
-		role: (session.user as any).role ?? 'user'
+		role
 	};
 };
