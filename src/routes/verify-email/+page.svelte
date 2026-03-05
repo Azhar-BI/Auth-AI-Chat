@@ -4,24 +4,24 @@
 
 <div class="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
 	<!-- Navbar -->
-	<nav class="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-gray-200 z-50">
-		<div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+	<nav class="fixed top-0 z-50 w-full border-b border-gray-200 bg-white/80 backdrop-blur-md">
+		<div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
 			<a href="/" class="text-xl font-bold tracking-tight">
 				<span class="text-black">Auth</span><span class="text-gray-500">Flow</span>
 			</a>
-			<a href="/login" class="text-sm text-gray-700 hover:text-black transition font-medium">
+			<a href="/login" class="text-sm font-medium text-gray-700 transition hover:text-black">
 				Go to Login
 			</a>
 		</div>
 	</nav>
 
 	<!-- Verification Result -->
-	<div class="flex items-center justify-center min-h-screen pt-20 px-4">
+	<div class="flex min-h-screen items-center justify-center px-4 pt-20">
 		<div class="w-full max-w-md animate-[fadeInUp_0.5s_ease-out]">
-			<div class="bg-white p-8 md:p-10 rounded-2xl shadow-xl border border-gray-200 text-center">
+			<div class="rounded-2xl border border-gray-200 bg-white p-8 text-center shadow-xl md:p-10">
 				{#if data.success}
 					<div
-						class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-5"
+						class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-green-100"
 					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -29,7 +29,7 @@
 							viewBox="0 0 24 24"
 							stroke-width="1.5"
 							stroke="currentColor"
-							class="w-8 h-8 text-green-600"
+							class="h-8 w-8 text-green-600"
 						>
 							<path
 								stroke-linecap="round"
@@ -38,8 +38,8 @@
 							/>
 						</svg>
 					</div>
-					<h1 class="text-2xl font-bold text-gray-900 mb-2">Email Verified!</h1>
-					<p class="text-gray-500 mb-8">
+					<h1 class="mb-2 text-2xl font-bold text-gray-900">Email Verified!</h1>
+					<p class="mb-8 text-gray-500">
 						Your email has been verified successfully.
 						{#if data.isLoggedIn}
 							You can now access your dashboard.
@@ -48,8 +48,8 @@
 						{/if}
 					</p>
 					<a
-						href={data.isLoggedIn ? "/dashboard" : "/login"}
-						class="inline-block bg-black text-white px-8 py-3 rounded-xl hover:bg-gray-800 transition-all duration-200 font-medium text-sm"
+						href={data.isLoggedIn ? '/dashboard' : '/login'}
+						class="inline-block rounded-xl bg-black px-8 py-3 text-sm font-medium text-white transition-all duration-200 hover:bg-gray-800"
 					>
 						{#if data.isLoggedIn}
 							Go to Dashboard
@@ -59,7 +59,7 @@
 					</a>
 				{:else}
 					<div
-						class="w-16 h-16 bg-red-100 rounded-2xl flex items-center justify-center mx-auto mb-5"
+						class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-red-100"
 					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -67,7 +67,7 @@
 							viewBox="0 0 24 24"
 							stroke-width="1.5"
 							stroke="currentColor"
-							class="w-8 h-8 text-red-500"
+							class="h-8 w-8 text-red-500"
 						>
 							<path
 								stroke-linecap="round"
@@ -76,11 +76,11 @@
 							/>
 						</svg>
 					</div>
-					<h1 class="text-2xl font-bold text-gray-900 mb-2">Verification Failed</h1>
-					<p class="text-gray-500 mb-8">{data.error}</p>
+					<h1 class="mb-2 text-2xl font-bold text-gray-900">Verification Failed</h1>
+					<p class="mb-8 text-gray-500">{data.error}</p>
 					<a
 						href="/login"
-						class="inline-block bg-black text-white px-8 py-3 rounded-xl hover:bg-gray-800 transition-all duration-200 font-medium text-sm"
+						class="inline-block rounded-xl bg-black px-8 py-3 text-sm font-medium text-white transition-all duration-200 hover:bg-gray-800"
 					>
 						Go to Login
 					</a>

@@ -1,11 +1,11 @@
-import nodemailer from "nodemailer";
+import nodemailer from 'nodemailer';
 import {
 	EMAIL_SERVER_HOST,
 	EMAIL_SERVER_PORT,
 	EMAIL_SERVER_USER,
 	EMAIL_SERVER_PASSWORD,
 	EMAIL_FROM
-} from "$env/static/private";
+} from '$env/static/private';
 
 const transporter = nodemailer.createTransport({
 	host: EMAIL_SERVER_HOST,
@@ -23,7 +23,7 @@ export async function sendVerificationEmail(email: string, token: string, baseUr
 	await transporter.sendMail({
 		from: EMAIL_FROM,
 		to: email,
-		subject: "Verify your email - AuthFlow",
+		subject: 'Verify your email - AuthFlow',
 		html: `
 			<div style="font-family: sans-serif; max-width: 480px; margin: 0 auto;">
 				<h2>Verify your email</h2>
@@ -45,7 +45,7 @@ export async function sendPasswordResetEmail(email: string, token: string, baseU
 	await transporter.sendMail({
 		from: EMAIL_FROM,
 		to: email,
-		subject: "Reset your password - AuthFlow",
+		subject: 'Reset your password - AuthFlow',
 		html: `
 			<div style="font-family: sans-serif; max-width: 480px; margin: 0 auto;">
 				<h2>Reset your password</h2>

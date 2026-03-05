@@ -1,19 +1,19 @@
-import type { PageServerLoad, Actions } from "./$types";
-import { redirect } from "@sveltejs/kit";
-import { db } from "$lib/server/db";
-import { verificationTokens } from "$lib/server/schema";
-import { eq } from "drizzle-orm";
-import { sendVerificationEmail } from "$lib/server/email";
-import crypto from "crypto";
+import type { PageServerLoad, Actions } from './$types';
+import { redirect } from '@sveltejs/kit';
+import { db } from '$lib/server/db';
+import { verificationTokens } from '$lib/server/schema';
+import { eq } from 'drizzle-orm';
+import { sendVerificationEmail } from '$lib/server/email';
+import crypto from 'crypto';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	const session = await locals.auth();
 	if (!session?.user) {
-		throw redirect(303, "/login");
+		throw redirect(303, '/login');
 	}
 
 	if ((session.user as any).emailVerified) {
-		throw redirect(303, "/dashboard");
+		throw redirect(303, '/dashboard');
 	}
 
 	return {
@@ -25,7 +25,7 @@ export const actions: Actions = {
 	resend: async ({ locals, url }) => {
 		const session = await locals.auth();
 		if (!session?.user?.email) {
-			throw redirect(303, "/login");
+			throw redirect(303, '/login');
 		}
 
 		// Delete existing tokens for this email

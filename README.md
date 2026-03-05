@@ -20,7 +20,6 @@ A full-stack authentication application built with SvelteKit, Auth.js, Drizzle O
 
 ---
 
-
 ## Prerequisites
 
 - [Node.js](https://nodejs.org/) >= 18.x
@@ -48,20 +47,20 @@ cp .env.example .env
 
 Fill in the required values in `.env`:
 
-| Variable               | Description                                |
-| ---------------------- | ------------------------------------------ |
-| `DATABASE_URL`         | PostgreSQL connection string               |
-| `AUTH_SECRET`          | Secret key for Auth.js session signing     |
-| `EMAIL_SERVER_HOST`    | SMTP server hostname                       |
-| `EMAIL_SERVER_PORT`    | SMTP server port (e.g., 2525 for Mailtrap) |
-| `EMAIL_SERVER_USER`    | SMTP username                              |
-| `EMAIL_SERVER_PASSWORD`| SMTP password                              |
-| `EMAIL_FROM`           | Sender email address                       |
-| `AUTH_GOOGLE_ID`       | Google OAuth client ID                     |
-| `AUTH_GOOGLE_SECRET`   | Google OAuth client secret                 |
-| `AUTH_GITHUB_ID`       | GitHub OAuth client ID                     |
-| `AUTH_GITHUB_SECRET`   | GitHub OAuth client secret                 |
-| `GEMINI_API_KEY`       | Google Gemini API key for AI chat          |
+| Variable                | Description                                |
+| ----------------------- | ------------------------------------------ |
+| `DATABASE_URL`          | PostgreSQL connection string               |
+| `AUTH_SECRET`           | Secret key for Auth.js session signing     |
+| `EMAIL_SERVER_HOST`     | SMTP server hostname                       |
+| `EMAIL_SERVER_PORT`     | SMTP server port (e.g., 2525 for Mailtrap) |
+| `EMAIL_SERVER_USER`     | SMTP username                              |
+| `EMAIL_SERVER_PASSWORD` | SMTP password                              |
+| `EMAIL_FROM`            | Sender email address                       |
+| `AUTH_GOOGLE_ID`        | Google OAuth client ID                     |
+| `AUTH_GOOGLE_SECRET`    | Google OAuth client secret                 |
+| `AUTH_GITHUB_ID`        | GitHub OAuth client ID                     |
+| `AUTH_GITHUB_SECRET`    | GitHub OAuth client secret                 |
+| `GEMINI_API_KEY`        | Google Gemini API key for AI chat          |
 
 ### 3. Start the Database
 
@@ -89,19 +88,19 @@ The app will be available at [http://localhost:5173](http://localhost:5173).
 
 ## Available Scripts
 
-| Script             | Description                        |
-| ------------------ | ---------------------------------- |
-| `pnpm dev`         | Start development server           |
-| `pnpm build`       | Build for production               |
-| `pnpm preview`     | Preview production build           |
-| `pnpm check`       | Run svelte-check type checking     |
-| `pnpm lint`        | Check code formatting (Prettier)   |
-| `pnpm format`      | Auto-format code (Prettier)        |
-| `pnpm db:start`    | Start PostgreSQL (Docker Compose)  |
-| `pnpm db:stop`     | Stop PostgreSQL                    |
-| `pnpm db:push`     | Push schema to database            |
-| `pnpm db:generate` | Generate Drizzle migrations        |
-| `pnpm db:studio`   | Open Drizzle Studio                |
+| Script             | Description                       |
+| ------------------ | --------------------------------- |
+| `pnpm dev`         | Start development server          |
+| `pnpm build`       | Build for production              |
+| `pnpm preview`     | Preview production build          |
+| `pnpm check`       | Run svelte-check type checking    |
+| `pnpm lint`        | Check code formatting (Prettier)  |
+| `pnpm format`      | Auto-format code (Prettier)       |
+| `pnpm db:start`    | Start PostgreSQL (Docker Compose) |
+| `pnpm db:stop`     | Stop PostgreSQL                   |
+| `pnpm db:push`     | Push schema to database           |
+| `pnpm db:generate` | Generate Drizzle migrations       |
+| `pnpm db:studio`   | Open Drizzle Studio               |
 
 ---
 

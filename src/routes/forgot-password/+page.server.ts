@@ -1,18 +1,18 @@
-import type { Actions } from "./$types";
-import { db } from "$lib/server/db";
-import { users, passwordResetTokens } from "$lib/server/schema";
-import { eq } from "drizzle-orm";
-import crypto from "crypto";
-import { fail } from "@sveltejs/kit";
-import { sendPasswordResetEmail } from "$lib/server/email";
+import type { Actions } from './$types';
+import { db } from '$lib/server/db';
+import { users, passwordResetTokens } from '$lib/server/schema';
+import { eq } from 'drizzle-orm';
+import crypto from 'crypto';
+import { fail } from '@sveltejs/kit';
+import { sendPasswordResetEmail } from '$lib/server/email';
 
 export const actions: Actions = {
 	default: async ({ request, url }) => {
 		const data = await request.formData();
-		const email = data.get("email")?.toString().trim().toLowerCase();
+		const email = data.get('email')?.toString().trim().toLowerCase();
 
 		if (!email) {
-			return fail(400, { error: "Email is required." });
+			return fail(400, { error: 'Email is required.' });
 		}
 
 		// Always show success to prevent email enumeration

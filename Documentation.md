@@ -25,18 +25,18 @@ AuthFlow is a full-stack authentication application built with SvelteKit. It imp
 
 ## Tech Stack
 
-| Layer          | Technology                              |
-| -------------- | --------------------------------------- |
-| Framework      | SvelteKit (Svelte 5)                    |
-| Styling        | TailwindCSS v4                          |
-| Authentication | Auth.js (`@auth/sveltekit`)             |
-| Database       | PostgreSQL 16                           |
-| ORM            | Drizzle ORM                             |
-| Email          | Nodemailer (SMTP)                       |
-| Password Hash  | bcryptjs                                |
-| AI             | Vercel AI SDK + Google Gemini           |
-| CI/CD          | GitHub Actions                          |
-| Containerization | Docker Compose (PostgreSQL)           |
+| Layer            | Technology                    |
+| ---------------- | ----------------------------- |
+| Framework        | SvelteKit (Svelte 5)          |
+| Styling          | TailwindCSS v4                |
+| Authentication   | Auth.js (`@auth/sveltekit`)   |
+| Database         | PostgreSQL 16                 |
+| ORM              | Drizzle ORM                   |
+| Email            | Nodemailer (SMTP)             |
+| Password Hash    | bcryptjs                      |
+| AI               | Vercel AI SDK + Google Gemini |
+| CI/CD            | GitHub Actions                |
+| Containerization | Docker Compose (PostgreSQL)   |
 
 ---
 
@@ -80,6 +80,7 @@ src/
 ```
 
 Configuration files:
+
 - `drizzle.config.ts` — Drizzle ORM config (schema path, DB connection, migrations)
 - `docker-compose.yml` — PostgreSQL 16 Alpine container
 - `.github/workflows/ci.yml` — GitHub Actions (lint, type-check, build)
@@ -93,31 +94,31 @@ Defined in `src/lib/server/schema.ts` using Drizzle ORM.
 
 ### users
 
-| Column          | Type        | Notes                                    |
-| --------------- | ----------- | ---------------------------------------- |
-| `id`            | UUID        | Primary key, auto-generated              |
-| `name`          | text        | User's display name                      |
-| `email`         | text        | Unique, not null                         |
-| `password`      | text        | bcrypt hash (null for OAuth-only users)  |
-| `email_verified`| timestamp   | Set when email is verified               |
-| `image`         | text        | Profile image URL (from OAuth)           |
-| `role`          | text        | `"user"` (default) or `"admin"`          |
-| `disabled`      | text        | `"false"` (default) or `"true"`          |
-| `created_at`    | timestamp   | Auto-set on creation                     |
+| Column           | Type      | Notes                                   |
+| ---------------- | --------- | --------------------------------------- |
+| `id`             | UUID      | Primary key, auto-generated             |
+| `name`           | text      | User's display name                     |
+| `email`          | text      | Unique, not null                        |
+| `password`       | text      | bcrypt hash (null for OAuth-only users) |
+| `email_verified` | timestamp | Set when email is verified              |
+| `image`          | text      | Profile image URL (from OAuth)          |
+| `role`           | text      | `"user"` (default) or `"admin"`         |
+| `disabled`       | text      | `"false"` (default) or `"true"`         |
+| `created_at`     | timestamp | Auto-set on creation                    |
 
 ### accounts
 
 OAuth provider accounts (required by Auth.js).
 
-| Column               | Type    | Notes                                     |
-| -------------------- | ------- | ----------------------------------------- |
-| `user_id`            | UUID    | FK to users, cascade delete               |
-| `type`               | text    | Account type (e.g., "oauth")              |
-| `provider`           | text    | Provider name (e.g., "google", "github")  |
-| `provider_account_id`| text    | Provider's user ID                        |
-| `access_token`       | text    | OAuth access token                        |
-| `refresh_token`      | text    | OAuth refresh token                       |
-| `expires_at`         | integer | Token expiry timestamp                    |
+| Column                | Type    | Notes                                    |
+| --------------------- | ------- | ---------------------------------------- |
+| `user_id`             | UUID    | FK to users, cascade delete              |
+| `type`                | text    | Account type (e.g., "oauth")             |
+| `provider`            | text    | Provider name (e.g., "google", "github") |
+| `provider_account_id` | text    | Provider's user ID                       |
+| `access_token`        | text    | OAuth access token                       |
+| `refresh_token`       | text    | OAuth refresh token                      |
+| `expires_at`          | integer | Token expiry timestamp                   |
 
 Primary key: `(provider, provider_account_id)`
 
@@ -125,29 +126,29 @@ Primary key: `(provider, provider_account_id)`
 
 Database-backed sessions (Auth.js database strategy).
 
-| Column          | Type      | Notes                          |
-| --------------- | --------- | ------------------------------ |
-| `session_token` | text      | Primary key                    |
-| `user_id`       | UUID      | FK to users, cascade delete    |
-| `expires`       | timestamp | Session expiry (30 days)       |
+| Column          | Type      | Notes                       |
+| --------------- | --------- | --------------------------- |
+| `session_token` | text      | Primary key                 |
+| `user_id`       | UUID      | FK to users, cascade delete |
+| `expires`       | timestamp | Session expiry (30 days)    |
 
 ### verification_tokens
 
-| Column       | Type      | Notes                            |
-| ------------ | --------- | -------------------------------- |
-| `identifier` | text      | User's email address             |
-| `token`      | text      | UUID token                       |
-| `expires`    | timestamp | 24-hour expiry                   |
+| Column       | Type      | Notes                |
+| ------------ | --------- | -------------------- |
+| `identifier` | text      | User's email address |
+| `token`      | text      | UUID token           |
+| `expires`    | timestamp | 24-hour expiry       |
 
 Primary key: `(identifier, token)`
 
 ### password_reset_tokens
 
-| Column       | Type      | Notes                            |
-| ------------ | --------- | -------------------------------- |
-| `identifier` | text      | User's email address             |
-| `token`      | text      | UUID token                       |
-| `expires`    | timestamp | 1-hour expiry                    |
+| Column       | Type      | Notes                |
+| ------------ | --------- | -------------------- |
+| `identifier` | text      | User's email address |
+| `token`      | text      | UUID token           |
+| `expires`    | timestamp | 1-hour expiry        |
 
 Primary key: `(identifier, token)`
 
@@ -158,6 +159,7 @@ Primary key: `(identifier, token)`
 ### Configuration (`src/lib/server/auth.ts`)
 
 Auth.js is configured with:
+
 - **DrizzleAdapter** — Maps Auth.js operations to PostgreSQL via Drizzle ORM
 - **Database session strategy** — Sessions stored in the `sessions` table (no JWT)
 - **30-day session expiry**
@@ -167,6 +169,7 @@ Auth.js is configured with:
 ### Session Callback
 
 The session callback enriches the session object with:
+
 - `user.id` — From the database user record
 - `user.emailVerified` — Timestamp of email verification
 - `user.role` — Fetched from the `users` table (`"user"` or `"admin"`)
@@ -270,16 +273,19 @@ Reset Password (/reset-password?token=...&email=...)
 ### Features
 
 **User Analytics** (calculated server-side):
+
 - Total registered users
 - Verified users count
 - Admin users count
 - Recent signups (last 7 days)
 
 **User Management Table**:
+
 - Displays all users with: name, email, role, verification status, join date
 - Desktop: full table layout / Mobile: card layout
 
 **Admin Actions**:
+
 - **Change Role** — Promote user to admin or demote to user
 - **Toggle Disabled** — Enable or disable a user account
 - Self-protection: admins cannot demote themselves or disable their own account
@@ -309,6 +315,7 @@ Reset Password (/reset-password?token=...&email=...)
 ### ChatMessage Component (`src/lib/components/chat/ChatMessage.svelte`)
 
 Reusable Svelte 5 component with props:
+
 - `role` — `"user"` or `"assistant"`
 - `content` — Message text
 - `loading` — Shows typing indicator when true
@@ -325,27 +332,30 @@ A floating button in the dashboard layout (bottom-right corner) links to `/dashb
 
 ### Public Routes
 
-| Route               | Purpose                                |
-| ------------------- | -------------------------------------- |
-| `/`                 | Landing page                           |
-| `/login`            | Login (redirects to dashboard if authenticated) |
-| `/register`         | Registration (redirects to dashboard if authenticated) |
-| `/forgot-password`  | Password reset request                 |
-| `/reset-password`   | Password reset form (token-based)      |
-| `/verify-email`     | Email verification (token-based)       |
-| `/verify-email-required` | Prompt to verify email            |
+| Route                    | Purpose                                                |
+| ------------------------ | ------------------------------------------------------ |
+| `/`                      | Landing page                                           |
+| `/login`                 | Login (redirects to dashboard if authenticated)        |
+| `/register`              | Registration (redirects to dashboard if authenticated) |
+| `/forgot-password`       | Password reset request                                 |
+| `/reset-password`        | Password reset form (token-based)                      |
+| `/verify-email`          | Email verification (token-based)                       |
+| `/verify-email-required` | Prompt to verify email                                 |
 
 ### Protected Routes
 
 **Dashboard Auth Guard** (`src/routes/dashboard/+layout.server.ts`):
+
 - Checks `session?.user` exists — redirects to `/login` if not
 - Checks `emailVerified` is set — redirects to `/verify-email-required` if not
 - Passes `user` and `role` to all child routes
 
 **Admin Auth Guard** (`src/routes/dashboard/admin/+page.server.ts`):
+
 - Checks `role === "admin"` — redirects to `/dashboard` if not
 
 **Chat API Guard** (`src/routes/api/chat/+server.ts`):
+
 - Checks `session?.user` — returns 401 if not authenticated
 
 ### Root Layout (`src/routes/+layout.server.ts`)
@@ -356,22 +366,22 @@ Loads the session on every page. Only treats the user as "logged in" if their em
 
 ## Security Measures
 
-| Measure                         | Implementation                                          |
-| ------------------------------- | ------------------------------------------------------- |
-| Password hashing                | bcrypt with 10 salt rounds                              |
-| Password requirements           | Min 6 chars, must contain letters and numbers           |
-| Session storage                 | httpOnly cookies (not accessible via JavaScript)         |
-| Session strategy                | Database-backed (no JWT, tokens stored server-side)      |
-| Email verification              | Required before login/dashboard access                  |
-| Email enumeration prevention    | Password reset always returns success                   |
-| Verification token expiry       | 24 hours                                                |
-| Password reset token expiry     | 1 hour                                                  |
-| Session expiry                  | 30 days                                                 |
-| Token cleanup                   | Used tokens deleted from database immediately           |
-| Account disabling               | Admins can disable accounts; disabled users cannot login |
-| Self-protection                 | Admins cannot demote or disable themselves               |
-| OAuth account linking           | Enabled for same-email accounts across providers        |
-| Input validation                | Server-side validation on all form submissions          |
+| Measure                      | Implementation                                           |
+| ---------------------------- | -------------------------------------------------------- |
+| Password hashing             | bcrypt with 10 salt rounds                               |
+| Password requirements        | Min 6 chars, must contain letters and numbers            |
+| Session storage              | httpOnly cookies (not accessible via JavaScript)         |
+| Session strategy             | Database-backed (no JWT, tokens stored server-side)      |
+| Email verification           | Required before login/dashboard access                   |
+| Email enumeration prevention | Password reset always returns success                    |
+| Verification token expiry    | 24 hours                                                 |
+| Password reset token expiry  | 1 hour                                                   |
+| Session expiry               | 30 days                                                  |
+| Token cleanup                | Used tokens deleted from database immediately            |
+| Account disabling            | Admins can disable accounts; disabled users cannot login |
+| Self-protection              | Admins cannot demote or disable themselves               |
+| OAuth account linking        | Enabled for same-email accounts across providers         |
+| Input validation             | Server-side validation on all form submissions           |
 
 ---
 
@@ -458,6 +468,7 @@ GitHub Actions workflow (`.github/workflows/ci.yml`):
 **Triggers:** Push to `main`, Pull requests to `main`
 
 **Steps:**
+
 1. Checkout code
 2. Install pnpm v10
 3. Setup Node.js 20 with pnpm cache
@@ -470,17 +481,17 @@ GitHub Actions workflow (`.github/workflows/ci.yml`):
 
 ## Environment Variables
 
-| Variable               | Required | Description                                |
-| ---------------------- | -------- | ------------------------------------------ |
-| `DATABASE_URL`         | Yes      | PostgreSQL connection string               |
-| `AUTH_SECRET`          | Yes      | Auth.js secret for session signing         |
-| `EMAIL_SERVER_HOST`    | Yes      | SMTP server hostname                       |
-| `EMAIL_SERVER_PORT`    | Yes      | SMTP server port                           |
-| `EMAIL_SERVER_USER`    | Yes      | SMTP username                              |
-| `EMAIL_SERVER_PASSWORD`| Yes      | SMTP password                              |
-| `EMAIL_FROM`           | Yes      | Sender email address                       |
-| `AUTH_GOOGLE_ID`       | Yes      | Google OAuth client ID                     |
-| `AUTH_GOOGLE_SECRET`   | Yes      | Google OAuth client secret                 |
-| `AUTH_GITHUB_ID`       | Yes      | GitHub OAuth client ID                     |
-| `AUTH_GITHUB_SECRET`   | Yes      | GitHub OAuth client secret                 |
-| `GEMINI_API_KEY`       | Yes      | Google Gemini API key for AI chat          |
+| Variable                | Required | Description                        |
+| ----------------------- | -------- | ---------------------------------- |
+| `DATABASE_URL`          | Yes      | PostgreSQL connection string       |
+| `AUTH_SECRET`           | Yes      | Auth.js secret for session signing |
+| `EMAIL_SERVER_HOST`     | Yes      | SMTP server hostname               |
+| `EMAIL_SERVER_PORT`     | Yes      | SMTP server port                   |
+| `EMAIL_SERVER_USER`     | Yes      | SMTP username                      |
+| `EMAIL_SERVER_PASSWORD` | Yes      | SMTP password                      |
+| `EMAIL_FROM`            | Yes      | Sender email address               |
+| `AUTH_GOOGLE_ID`        | Yes      | Google OAuth client ID             |
+| `AUTH_GOOGLE_SECRET`    | Yes      | Google OAuth client secret         |
+| `AUTH_GITHUB_ID`        | Yes      | GitHub OAuth client ID             |
+| `AUTH_GITHUB_SECRET`    | Yes      | GitHub OAuth client secret         |
+| `GEMINI_API_KEY`        | Yes      | Google Gemini API key for AI chat  |

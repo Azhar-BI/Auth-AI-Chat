@@ -1,6 +1,6 @@
-import type { Session } from "@auth/core/types";
+import type { Session } from '@auth/core/types';
 
-declare module "@auth/core/types" {
+declare module '@auth/core/types' {
 	interface User {
 		emailVerified?: Date | null;
 	}
