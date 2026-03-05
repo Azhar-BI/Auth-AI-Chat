@@ -20,6 +20,7 @@ A full-stack authentication application built with SvelteKit, Auth.js, Drizzle O
 
 ---
 
+
 ## Prerequisites
 
 - [Node.js](https://nodejs.org/) >= 18.x
