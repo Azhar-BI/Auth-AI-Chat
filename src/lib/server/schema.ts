@@ -69,6 +69,35 @@ export const verificationTokens = pgTable(
 /**
  * PASSWORD RESET TOKENS
  */
+/**
+ * CONVERSATIONS TABLE
+ */
+export const conversations = pgTable('conversations', {
+	id: uuid('id').defaultRandom().primaryKey(),
+	userId: uuid('user_id')
+		.notNull()
+		.references(() => users.id, { onDelete: 'cascade' }),
+	title: text('title').notNull().default('New Chat'),
+	createdAt: timestamp('created_at').defaultNow(),
+	updatedAt: timestamp('updated_at').defaultNow()
+});
+
+/**
+ * CHAT MESSAGES TABLE
+ */
+export const chatMessages = pgTable('chat_messages', {
+	id: uuid('id').defaultRandom().primaryKey(),
+	conversationId: uuid('conversation_id')
+		.notNull()
+		.references(() => conversations.id, { onDelete: 'cascade' }),
+	role: text('role').notNull(), // 'user' | 'assistant'
+	content: text('content').notNull(),
+	createdAt: timestamp('created_at').defaultNow()
+});
+
+/**
+ * PASSWORD RESET TOKENS
+ */
 export const passwordResetTokens = pgTable(
 	'password_reset_tokens',
 	{

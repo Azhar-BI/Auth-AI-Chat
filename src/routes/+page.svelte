@@ -587,9 +587,9 @@
 							>hello@authflow.dev</a
 						>
 					</li>
-					<li><a href="#" class="transition hover:text-white">LinkedIn</a></li>
-					<li><a href="#" class="transition hover:text-white">GitHub</a></li>
-					<li><a href="#" class="transition hover:text-white">Twitter</a></li>
+					<li><span class="transition hover:text-white">LinkedIn</span></li>
+					<li><span class="transition hover:text-white">GitHub</span></li>
+					<li><span class="transition hover:text-white">Twitter</span></li>
 				</ul>
 			</div>
 		</div>
@@ -598,8 +598,8 @@
 		>
 			<p>&copy; 2026 AuthFlow. All rights reserved.</p>
 			<div class="mt-4 flex gap-6 md:mt-0">
-				<a href="#" class="transition hover:text-white">Privacy Policy</a>
-				<a href="#" class="transition hover:text-white">Terms of Service</a>
+				<span class="transition hover:text-white">Privacy Policy</span>
+				<span class="transition hover:text-white">Terms of Service</span>
 			</div>
 		</div>
 	</div>
