@@ -76,11 +76,11 @@
 		<a href="/" class="text-xl font-bold tracking-tight">
 			<span class="text-black">Auth</span><span class="text-gray-500">Flow</span>
 		</a>
-		<div class="hidden items-center gap-8 text-sm text-gray-600 md:flex">
-			<a href="#services" class="transition hover:text-black">Services</a>
-			<a href="#about" class="transition hover:text-black">About</a>
-			<a href="#testimonials" class="transition hover:text-black">Testimonials</a>
-			<a href="#contact" class="transition hover:text-black">Contact</a>
+		<div class="hidden items-center gap-2 text-sm font-medium md:flex">
+			<a href="#services" class="rounded-lg px-3 py-1.5 text-gray-700 transition hover:bg-gray-100 hover:text-black">Services</a>
+			<a href="#about" class="rounded-lg px-3 py-1.5 text-gray-700 transition hover:bg-gray-100 hover:text-black">About</a>
+			<a href="#testimonials" class="rounded-lg px-3 py-1.5 text-gray-700 transition hover:bg-gray-100 hover:text-black">Testimonials</a>
+			<a href="#contact" class="rounded-lg px-3 py-1.5 text-gray-700 transition hover:bg-gray-100 hover:text-black">Contact</a>
 		</div>
 		<div class="hidden items-center gap-3 md:flex">
 			{#if data.user}
